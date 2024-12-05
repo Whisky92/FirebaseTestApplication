@@ -1,13 +1,22 @@
 [versions]
 agp = "8.5.0"
-kotlin = "1.9.0"
-coreKtx = "1.15.0"
+kotlin = "2.0.0"
+coreKtx = "1.13.0"
+ksp = "2.0.0-1.0.21"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
 composeBom = "2024.04.01"
+androidHilt = "1.2.0"
+dagger = "2.52"
+firebase = "33.6.0"
+junit5 = "5.10.1"
+mockk = "1.13.13"
+kotest = "5.9.1"
+playServices = "17.0.0"
+googleGmsGoogleServices = "4.4.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -25,7 +34,31 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
+
+hilt-android-ksp = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "androidHilt" }
+hilt-android-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidHilt" }
+dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
+dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
+hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "dagger" }
+
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+
+play-services = { module = "com.google.android.gms:play-services-gcm", version.ref = "playServices" }
+
+junit-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version.ref = "junit5"}
+junit-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit5"}
+
+mockk-test = { group = "io.mockk",  name = "mockk", version.ref = "mockk" }
+mockk-android = { group = "io.mockk",  name = "mockk-android", version.ref = "mockk" }
+
+kotest-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
+google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
