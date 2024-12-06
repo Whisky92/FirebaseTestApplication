@@ -1,4 +1,4 @@
-package com.example.firebasetestapplication.registration.presentation.components
+package com.example.firebasetestapplication.core.presentation.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -15,8 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.example.firebasetestapplication.R
 
 @Composable
-fun LoginButton(
-    onSignUp: () -> Unit
+fun ChangeScreenButton(
+    text: String,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -25,10 +26,13 @@ fun LoginButton(
         horizontalArrangement = Arrangement.Center
     ) {
         OutlinedButton(
-            onClick = onSignUp,
+            onClick = onClick,
             border = BorderStroke(1.dp, Color.White)
         ) {
-            Text(text = stringResource(id = R.string.login_text), color = Color.White)
+            Text(
+                text = text,
+                color = Color.White
+            )
         }
     }
 }

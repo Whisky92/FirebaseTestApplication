@@ -10,5 +10,10 @@ sealed interface ErrorType {
             override val stringResId: Int
                 get() = R.string.register_user_error
         }
+
+        data object Login : User {
+            override val stringResId: Int
+                get() = R.string.login_user_error
+        }
     }
 }

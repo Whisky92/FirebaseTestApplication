@@ -1,12 +1,10 @@
-package com.example.firebasetestapplication.registration.presentation
+package com.example.firebasetestapplication.login.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.firebasetestapplication.R
-import com.example.firebasetestapplication.core.domain.model.RegisterUserData
 import com.example.firebasetestapplication.core.domain.util.Resource
-import com.example.firebasetestapplication.registration.domain.usecase.RegisterUseCase
-import com.example.firebasetestapplication.registration.presentation.model.RegisterUserUIModel
+import com.example.firebasetestapplication.login.domain.usecase.LoginUseCase
+import com.example.firebasetestapplication.registration.presentation.model.LoginUserUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,17 +15,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegistrationViewModel @Inject constructor(
-    private val registerUseCase: RegisterUseCase
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase
 ) : ViewModel() {
 
-    private val _registrationState = MutableStateFlow(RegistrationState.UiState())
-    val registrationState = _registrationState.asStateFlow()
+    private val _loginState = MutableStateFlow(LoginState.UiState())
+    val loginState = _loginState.asStateFlow()
 
     private val _messageState = MutableSharedFlow<Int?>()
     val messageState = _messageState.asSharedFlow()
 
-    private val _event = MutableSharedFlow<RegistrationState.Event>()
+    private val _event = MutableSharedFlow<LoginState.Event>()
 
     init {
         subscribeToEvent()
@@ -41,24 +39,24 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
-    private fun handleEvent(event: RegistrationState.Event) {
+    private fun handleEvent(event: LoginState.Event) {
         when (event) {
-            is RegistrationState.Event.Register -> registerUser()
-            is RegistrationState.Event.ChangeEmail -> updateEmailState(event.email)
-            is RegistrationState.Event.ChangePassword -> updatePasswordState(event.password)
+            is LoginState.Event.Login -> login()
+            is LoginState.Event.ChangeEmail -> updateEmailState(event.email)
+            is LoginState.Event.ChangePassword -> updatePasswordState(event.password)
         }
     }
 
-    fun setEvent(event: RegistrationState.Event) {
+    fun setEvent(event: LoginState.Event) {
         viewModelScope.launch {
             _event.emit(event)
         }
     }
 
-    private fun registerUser() {
+    private fun login() {
         createUser()?.let {
             viewModelScope.launch {
-                registerUseCase.invoke(it).collect {
+                loginUseCase.invoke(it).collect {
                     when (it) {
                         is Resource.Error -> {
                             updateIsLoadingState(false)
@@ -75,24 +73,24 @@ class RegistrationViewModel @Inject constructor(
                     }
                 }
             }
-        } ?: updateMessageState(R.string.not_all_data_filled_error)
+        }
     }
 
-    private fun createUser(): RegisterUserUIModel? {
-        val email = _registrationState.value.email
-        val password = _registrationState.value.password
+    private fun createUser(): LoginUserUIModel? {
+        val email = _loginState.value.email
+        val password = _loginState.value.password
 
         if (email.isBlank() || password.isBlank()) {
             return null
         }
-        return RegisterUserUIModel(
+        return LoginUserUIModel(
             email = email,
             password = password,
         )
     }
 
     private fun updateIsLoadingState(isLoading: Boolean) {
-        _registrationState.update {
+        _loginState.update {
             it.copy(
                 isLoading = isLoading
             )
@@ -100,7 +98,7 @@ class RegistrationViewModel @Inject constructor(
     }
 
     private fun updateEmailState(email: String) {
-        _registrationState.update {
+        _loginState.update {
             it.copy(
                 email = email
             )
@@ -108,7 +106,7 @@ class RegistrationViewModel @Inject constructor(
     }
 
     private fun updatePasswordState(password: String) {
-        _registrationState.update {
+        _loginState.update {
             it.copy(
                 password = password
             )
@@ -120,5 +118,4 @@ class RegistrationViewModel @Inject constructor(
             _messageState.emit(messageId)
         }
     }
-
 }

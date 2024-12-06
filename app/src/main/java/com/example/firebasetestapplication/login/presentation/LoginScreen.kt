@@ -1,10 +1,9 @@
-package com.example.firebasetestapplication.registration.presentation
+package com.example.firebasetestapplication.login.presentation
 
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,17 +17,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.firebasetestapplication.R
-import com.example.firebasetestapplication.core.presentation.components.Title
-import com.example.firebasetestapplication.registration.presentation.components.RegistrationForm
 import com.example.firebasetestapplication.core.presentation.components.ChangeScreenButton
+import com.example.firebasetestapplication.core.presentation.components.Title
+import com.example.firebasetestapplication.login.presentation.components.LoginForm
+import com.example.firebasetestapplication.registration.presentation.RegistrationState
 
 @Composable
-fun RegistrationScreen(
-    viewModel: RegistrationViewModel = hiltViewModel<RegistrationViewModel>(),
-    switchToLoginScreen: () -> Unit
+fun LoginScreen(
+    viewModel: LoginViewModel = hiltViewModel<LoginViewModel>(),
+    switchToRegisterScreen: () -> Unit
 ) {
     val context = LocalContext.current
-    val uiState by viewModel.registrationState.collectAsStateWithLifecycle()
+    val uiState by viewModel.loginState.collectAsStateWithLifecycle()
     val messageState by viewModel.messageState.collectAsStateWithLifecycle(initialValue = null)
 
     val message = messageState?.let { stringResource(id = it) }
@@ -41,45 +41,42 @@ fun RegistrationScreen(
             ).show()
         }
     }
+
     val onEmailContentChanged: (String) -> Unit = {
         viewModel.setEvent(
-            RegistrationState.Event.ChangeEmail(it)
+            LoginState.Event.ChangeEmail(it)
         )
     }
     val onPasswordContentChanged: (String) -> Unit = {
         viewModel.setEvent(
-            RegistrationState.Event.ChangePassword(it)
+            LoginState.Event.ChangePassword(it)
         )
     }
-    val onRegisterButtonClicked: () -> Unit = {
+    val onLoginButtonClicked: () -> Unit = {
         viewModel.setEvent(
-            RegistrationState.Event.Register
+            LoginState.Event.Login
         )
     }
 
-    RegistrationScreenContent(
-        password = uiState.password,
+    LoginScreenContent(
         email = uiState.email,
-        onPasswordContentChanged = onPasswordContentChanged,
+        password = uiState.password,
         onEmailContentChanged = onEmailContentChanged,
-        onRegisterButtonClicked = onRegisterButtonClicked,
-        switchToLoginScreen = switchToLoginScreen
+        onPasswordContentChanged = onPasswordContentChanged,
+        onLoginButtonClicked = onLoginButtonClicked,
+        switchToRegisterScreen = switchToRegisterScreen
     )
 }
 
 @Composable
 @Preview
-private fun RegistrationScreenContent(
-    username: String = "",
+private fun LoginScreenContent(
     email: String = "",
     password: String = "",
-    name: String = "",
-    onUsernameContentChanged: (String) -> Unit = {},
     onEmailContentChanged: (String) -> Unit = {},
     onPasswordContentChanged: (String) -> Unit = {},
-    onNameContentChanged: (String) -> Unit = {},
-    onRegisterButtonClicked: () -> Unit = {},
-    switchToLoginScreen: () -> Unit = {}
+    onLoginButtonClicked: () -> Unit = {},
+    switchToRegisterScreen: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -94,21 +91,17 @@ private fun RegistrationScreenContent(
             ),
         verticalArrangement = Arrangement.SpaceAround
     ) {
-        Title(text = stringResource(id = R.string.register_text))
-        RegistrationForm(
-            username = username,
-            password = password,
+        Title(text = stringResource(id = R.string.login_text))
+        LoginForm(
             email = email,
-            name = name,
-            onUsernameContentChanged = onUsernameContentChanged,
-            onPasswordContentChanged = onPasswordContentChanged,
+            password = password,
             onEmailContentChanged = onEmailContentChanged,
-            onNameContentChanged = onNameContentChanged,
-            onRegisterButtonClicked = onRegisterButtonClicked
+            onPasswordContentChanged = onPasswordContentChanged,
+            onLoginButtonClicked = onLoginButtonClicked
         )
         ChangeScreenButton(
-            text = stringResource(id = R.string.login_text),
-            onClick = switchToLoginScreen
+            text = stringResource(id = R.string.register_text),
+            onClick = switchToRegisterScreen
         )
     }
 }

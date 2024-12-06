@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.firebasetestapplication.login.presentation.LoginScreen
 import com.example.firebasetestapplication.ui.theme.FirebaseTestApplicationTheme
 import com.example.firebasetestapplication.registration.presentation.RegistrationScreen
 import com.google.firebase.Firebase
@@ -22,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
-        val db = Firebase.firestore
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -44,7 +44,18 @@ private fun Navigation() {
         startDestination = Route.Registration.route
     ) {
         composable(Route.Registration.route) {
-            RegistrationScreen()
+            RegistrationScreen(
+                switchToLoginScreen = {
+                    navController.navigate(Route.Login.route)
+                }
+            )
+        }
+        composable(Route.Login.route) {
+            LoginScreen(
+                switchToRegisterScreen = {
+                    navController.navigate(Route.Registration.route)
+                }
+            )
         }
     }
 }

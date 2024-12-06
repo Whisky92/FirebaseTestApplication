@@ -1,4 +1,4 @@
-package com.example.firebasetestapplication.registration.presentation.components
+package com.example.firebasetestapplication.login.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -22,16 +21,12 @@ import com.example.firebasetestapplication.R
 import com.example.firebasetestapplication.core.presentation.components.FormSubmitButton
 
 @Composable
-fun RegistrationForm(
-    username: String,
+fun LoginForm(
     email: String,
     password: String,
-    name: String,
-    onUsernameContentChanged: (String) -> Unit,
     onEmailContentChanged: (String) -> Unit,
     onPasswordContentChanged: (String) -> Unit,
-    onNameContentChanged: (String) -> Unit,
-    onRegisterButtonClicked: () -> Unit
+    onLoginButtonClicked: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -54,36 +49,6 @@ fun RegistrationForm(
             shape = RoundedCornerShape(10.dp)
         )
         TextField(
-            value = username,
-            onValueChange = onUsernameContentChanged,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "",
-                    tint = Color.LightGray
-                )
-            },
-            label = {
-                Text(text = "Username", color = Color.LightGray)
-            },
-            shape = RoundedCornerShape(10.dp)
-        )
-        TextField(
-            value = name,
-            onValueChange = onNameContentChanged,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "",
-                    tint = Color.LightGray
-                )
-            },
-            label = {
-                Text(text = "Test Test", color = Color.LightGray)
-            },
-            shape = RoundedCornerShape(10.dp)
-        )
-        TextField(
             value = password,
             onValueChange = onPasswordContentChanged,
             leadingIcon = {
@@ -100,8 +65,8 @@ fun RegistrationForm(
             shape = RoundedCornerShape(10.dp)
         )
         FormSubmitButton(
-            text = stringResource(id = R.string.register_text),
-            onClick = onRegisterButtonClicked
+            text = stringResource(id = R.string.login_text),
+            onClick = onLoginButtonClicked
         )
     }
 }

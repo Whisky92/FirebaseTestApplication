@@ -1,6 +1,6 @@
-package com.example.firebasetestapplication.registration.presentation
+package com.example.firebasetestapplication.login.presentation
 
-class RegistrationState {
+class LoginState {
     data class UiState(
         val isLoading: Boolean = false,
         val email: String = "",
@@ -10,6 +10,6 @@ class RegistrationState {
     sealed interface Event {
         data class ChangePassword(val password: String) : Event
         data class ChangeEmail(val email: String) : Event
-        data object Register : Event
+        data object Login : Event
     }
 }

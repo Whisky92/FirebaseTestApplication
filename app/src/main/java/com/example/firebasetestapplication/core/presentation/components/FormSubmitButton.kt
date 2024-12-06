@@ -1,4 +1,4 @@
-package com.example.firebasetestapplication.registration.presentation.components
+package com.example.firebasetestapplication.core.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,20 +15,23 @@ import androidx.compose.ui.unit.dp
 import com.example.firebasetestapplication.R
 
 @Composable
-fun SignUpButton(onSubmit: () -> Unit) {
+fun FormSubmitButton(
+    text: String,
+    onClick: () -> Unit
+) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .height(80.dp)
             .padding(horizontal = 100.dp, vertical = 15.dp),
-        onClick = onSubmit,
+        onClick = onClick,
         shape = RoundedCornerShape(50.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White
         )
     ) {
         Text(
-            text = stringResource(id = R.string.sign_up_text),
+            text = text,
             color = Color.Blue
         )
     }

@@ -13,11 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.firebasetestapplication.R
 
 @Composable
-fun Title() {
+fun Title(
+    text: String
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -32,7 +36,7 @@ fun Title() {
             tint = Color.White
         )
         Text(
-            text = "Register", color = Color.White, fontSize = 50.sp
+            text = text, color = Color.White, fontSize = 50.sp
         )
     }
 }
